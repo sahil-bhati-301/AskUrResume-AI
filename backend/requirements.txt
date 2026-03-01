@@ -1,14 +1,14 @@
 # FastAPI and server
-fastapi==0.115.0
-uvicorn==0.32.0
-python-multipart==0.0.12
+fastapi
+uvicorn
+python-multipart
 
 # PDF processing
-pymupdf==1.25.2
+pymupdf
 
 # Vector search and embeddings
-faiss-cpu==1.8.0
-sentence-transformers==3.3.1
+faiss-cpu
+sentence-transformers
 
 # Utilities
-numpy==1.26.4
+numpy
