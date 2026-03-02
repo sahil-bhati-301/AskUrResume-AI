@@ -18,7 +18,7 @@ async def search_resumes_by_job_description(request: SearchRequest):
     """
     # Check if there are any resumes uploaded
     if request.top_k is None:
-        request.top_k = 10
+        request.top_k = 3
     
     # Generate embedding for job description
     try:

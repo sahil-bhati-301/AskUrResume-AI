@@ -19,7 +19,7 @@ function App() {
       const response = await fetch("/api/search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ job_description: jobDescription, top_k: 10 }),
+        body: JSON.stringify({ job_description: jobDescription, top_k: 3 }),
       });
       const data = await response.json();
       setSearchResults(data);
