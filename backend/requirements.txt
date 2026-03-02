@@ -10,5 +10,9 @@ pymupdf
 faiss-cpu
 sentence-transformers
 
+# AI/LLM
+google-generativeai
+
 # Utilities
 numpy
+python-dotenv

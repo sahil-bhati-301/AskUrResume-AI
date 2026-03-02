@@ -2,9 +2,15 @@
 AURA - AskUrResume-AI Backend
 FastAPI application for resume screening and matching
 """
+from pathlib import Path
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import resumes, search
+
+# Load environment variables from .env file
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(env_path)
 
 app = FastAPI(
     title="AURA - AskUrResume-AI",
