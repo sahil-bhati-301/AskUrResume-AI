@@ -146,3 +146,19 @@ def search_resumes(query_embedding: np.ndarray, top_k: int = 10) -> List[Dict[st
             })
     
     return results
+
+
+def get_resume_by_filename(filename: str) -> Dict[str, Any]:
+    """
+    Get full resume data by filename
+    
+    Args:
+        filename: Name of the resume file
+        
+    Returns:
+        Resume data dictionary or None
+    """
+    for resume in _resumes.values():
+        if resume["filename"] == filename:
+            return resume
+    return None

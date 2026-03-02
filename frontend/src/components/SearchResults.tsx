@@ -6,14 +6,14 @@ interface Props {
 
 function SearchResults({ results }: Props) {
   const getScoreColor = (score: number) => {
-    if (score >= 0.8) return "#28a745"; // green
-    if (score >= 0.6) return "#17a2b8"; // blue
-    if (score >= 0.4) return "#ffc107"; // yellow
-    return "#dc3545"; // red
+    if (score >= 80) return "#28a745";
+    if (score >= 60) return "#17a2b8";
+    if (score >= 40) return "#ffc107";
+    return "#dc3545";
   };
 
   const getScoreLabel = (score: number) => {
-    return `${(score * 100).toFixed(1)}% match`;
+    return `${score}% match`;
   };
 
   return (
@@ -21,23 +21,25 @@ function SearchResults({ results }: Props) {
       <p style={{ marginBottom: "15px", color: "#666" }}>
         Found {results.length} matching resume(s)
       </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
         {results.map((result, index) => (
           <div
             key={result.id}
             style={{
               border: "1px solid #ddd",
               borderRadius: "8px",
-              padding: "15px",
+              padding: "20px",
               backgroundColor: "white",
               boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
             }}
           >
+            {/* Header */}
             <div
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
+                marginBottom: "15px",
               }}
             >
               <div>
@@ -56,33 +58,105 @@ function SearchResults({ results }: Props) {
                 >
                   {index + 1}
                 </span>
-                <strong style={{ fontSize: "16px" }}>{result.filename}</strong>
+                <strong style={{ fontSize: "16px" }}>
+                  {result.filename}
+                </strong>
               </div>
-              <span
+              {result.match_score && (
+                <span
+                  style={{
+                    padding: "5px 12px",
+                    borderRadius: "20px",
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    color: "white",
+                    backgroundColor: getScoreColor(result.match_score),
+                  }}
+                >
+                  {getScoreLabel(result.match_score)}
+                </span>
+              )}
+            </div>
+
+            {/* Summary */}
+            {result.summary && (
+              <p
                 style={{
-                  padding: "5px 10px",
-                  borderRadius: "20px",
+                  marginBottom: "15px",
+                  padding: "12px",
+                  backgroundColor: "#f8f9fa",
+                  borderRadius: "4px",
                   fontSize: "14px",
-                  fontWeight: "bold",
-                  color: "white",
-                  backgroundColor: getScoreColor(result.score),
+                  fontStyle: "italic",
+                  color: "#333",
                 }}
               >
-                {getScoreLabel(result.score)}
-              </span>
-            </div>
-            <p
-              style={{
-                marginTop: "10px",
-                padding: "10px",
-                backgroundColor: "#f9f9f9",
-                borderRadius: "4px",
-                fontSize: "13px",
-                color: "#555",
-              }}
-            >
-              {result.text_preview}
-            </p>
+                {result.summary}
+              </p>
+            )}
+
+            {/* Strengths */}
+            {result.strengths && result.strengths.length > 0 && (
+              <div style={{ marginBottom: "12px" }}>
+                <strong style={{ color: "#28a745", fontSize: "14px" }}>
+                  Strengths:
+                </strong>
+                <ul
+                  style={{
+                    marginTop: "5px",
+                    paddingLeft: "20px",
+                    fontSize: "13px",
+                    color: "#555",
+                  }}
+                >
+                  {result.strengths.map((strength, i) => (
+                    <li key={i}>{strength}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Weaknesses */}
+            {result.weaknesses && result.weaknesses.length > 0 && (
+              <div style={{ marginBottom: "12px" }}>
+                <strong style={{ color: "#dc3545", fontSize: "14px" }}>
+                  Weaknesses:
+                </strong>
+                <ul
+                  style={{
+                    marginTop: "5px",
+                    paddingLeft: "20px",
+                    fontSize: "13px",
+                    color: "#555",
+                  }}
+                >
+                  {result.weaknesses.map((weakness, i) => (
+                    <li key={i}>{weakness}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
+            {/* Bias */}
+            {result.bias && result.bias.length > 0 && (
+              <div>
+                <strong style={{ color: "#ffc107", fontSize: "14px" }}>
+                  Potential Bias:
+                </strong>
+                <ul
+                  style={{
+                    marginTop: "5px",
+                    paddingLeft: "20px",
+                    fontSize: "13px",
+                    color: "#555",
+                  }}
+                >
+                  {result.bias.map((bias, i) => (
+                    <li key={i}>{bias}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         ))}
       </div>

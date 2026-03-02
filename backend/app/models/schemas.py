@@ -22,7 +22,18 @@ class ResumeListResponse(BaseModel):
 class SearchRequest(BaseModel):
     """Request model for search"""
     job_description: str
-    top_k: Optional[int] = 10
+    top_k: Optional[int] = 3
+
+
+class EvaluationResult(BaseModel):
+    """Individual resume evaluation result"""
+    resume_index: int
+    filename: str
+    match_score: int
+    strengths: List[str]
+    weaknesses: List[str]
+    bias: List[str]
+    summary: str
 
 
 class SearchResult(BaseModel):
@@ -31,3 +42,9 @@ class SearchResult(BaseModel):
     filename: str
     score: float
     text_preview: str
+    # LLM evaluation fields
+    match_score: Optional[int] = None
+    strengths: Optional[List[str]] = None
+    weaknesses: Optional[List[str]] = None
+    bias: Optional[List[str]] = None
+    summary: Optional[str] = None

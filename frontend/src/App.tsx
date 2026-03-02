@@ -15,6 +15,7 @@ function App() {
 
   const handleSearch = async (jobDescription: string) => {
     setIsSearching(true);
+    setSearchResults([]); // Clear previous results
     try {
       const response = await fetch("/api/search", {
         method: "POST",
@@ -81,7 +82,36 @@ function App() {
         />
       </div>
 
-      {searchResults.length > 0 && (
+      {/* Loading State */}
+      {isSearching && (
+        <div
+          style={{
+            textAlign: "center",
+            padding: "40px",
+            backgroundColor: "#f8f9fa",
+            borderRadius: "8px",
+            marginBottom: "20px",
+          }}
+        >
+          <div
+            style={{
+              fontSize: "48px",
+              marginBottom: "15px",
+            }}
+          >
+            🤖
+          </div>
+          <p style={{ fontSize: "16px", color: "#666", margin: 0 }}>
+            Analyzing resumes with AI...
+          </p>
+          <p style={{ fontSize: "14px", color: "#999", marginTop: "8px" }}>
+            This may take a few seconds
+          </p>
+        </div>
+      )}
+
+      {/* Results */}
+      {searchResults.length > 0 && !isSearching && (
         <div>
           <h2
             style={{
